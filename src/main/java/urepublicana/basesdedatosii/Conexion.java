@@ -24,7 +24,7 @@ public class Conexion {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 con = DriverManager.getConnection("jdbc:sqlserver://localhost", Usuario, Contrasena);
                 if (con != null) {
-                    System.out.println("La conexion se ha realizado satisfactoriamente");
+                    System.out.println("La conexion se ha realizado satisfactoriamente.");
                 }
 
             } catch (ClassNotFoundException ex) {
