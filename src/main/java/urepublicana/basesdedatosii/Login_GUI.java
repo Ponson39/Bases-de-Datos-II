@@ -9,18 +9,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author alex-arch
  */
-public class Usuarios extends javax.swing.JDialog {
+public class Login_GUI extends javax.swing.JDialog {
 
     /**
      * Creates new form Usuarios
@@ -29,27 +27,24 @@ public class Usuarios extends javax.swing.JDialog {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            
             accion = e.getActionCommand();
-
+            
             System.out.println("Has pulsado el botón -" + e.getActionCommand() + "-");
         }
-
     }
 
-    public Usuarios(java.awt.Frame parent, boolean modal, Connection conection) {
+    public Login_GUI(java.awt.Frame parent, boolean modal, Connection conection) {
         super(parent, modal);
         initComponents();
-
+        
         con = conection;
-
+        
         setLocationRelativeTo(null);
-
+        
         jButtonCrear.addActionListener(new BotonPulsadoListener());
         jButtonBorrar.addActionListener(new BotonPulsadoListener());
         jButtonVer.addActionListener(new BotonPulsadoListener());
-
-        Roles();
 
     }
 
@@ -67,67 +62,65 @@ public class Usuarios extends javax.swing.JDialog {
         jButtonBorrar = new javax.swing.JButton();
         jButtonVer = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableUsuarios = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jTextLogin = new javax.swing.JTextField();
-        jTextUsuario = new javax.swing.JTextField();
+        jTextDB = new javax.swing.JTextField();
         jLabelLogin = new javax.swing.JLabel();
-        jLabelUsuario = new javax.swing.JLabel();
-        jLabelRol = new javax.swing.JLabel();
-        jTextRol = new javax.swing.JComboBox<>();
+        jLabelPass = new javax.swing.JLabel();
+        jLabelDB = new javax.swing.JLabel();
+        jTextPass = new javax.swing.JPasswordField();
         jButtonGuardar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
-        jButtonAtras = new javax.swing.JButton();
+        jButtonVer1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(721, 418));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("USUARIOS");
+        jLabel1.setText("LOGINS");
 
-        jButtonCrear.setText("Crear usuario");
+        jButtonCrear.setText("Crear login");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCrearActionPerformed(evt);
             }
         });
 
-        jButtonBorrar.setText("Borrar usuario");
+        jButtonBorrar.setText("Borrar login");
         jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBorrarActionPerformed(evt);
             }
         });
 
-        jButtonVer.setText("Ver usuario");
+        jButtonVer.setText("Ver login");
         jButtonVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVerActionPerformed(evt);
             }
         });
 
-        jTableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID Usuario", "Usuario", "ID Rol", "Rol"
+                "Login", "Usuario", "Rol"
             }
         ));
-        jScrollPane1.setViewportView(jTableUsuarios);
+        jScrollPane1.setViewportView(jTable1);
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(403, 105));
-
         jLabelLogin.setText("Login:");
 
-        jLabelUsuario.setText("Usuario:");
+        jLabelPass.setText("Password:");
 
-        jLabelRol.setText("Rol: ");
+        jLabelDB.setText("DB: ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -140,53 +133,55 @@ public class Usuarios extends javax.swing.JDialog {
                         .addComponent(jLabelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelRol, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelPass)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextRol, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextPass, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 3, Short.MAX_VALUE)
+                        .addComponent(jLabelDB, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextDB, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jLabelUsuario)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                    .addComponent(jTextLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                    .addContainerGap(93, Short.MAX_VALUE)
+                    .addComponent(jTextLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextLogin, jTextRol, jTextUsuario});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabelDB, jLabelLogin, jLabelPass});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextDB, jTextLogin, jTextPass});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addComponent(jLabelLogin)
-                .addGap(2, 2, 2)
-                .addComponent(jTextUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelRol))
-                .addContainerGap(8, Short.MAX_VALUE))
+                    .addComponent(jTextPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelPass))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelDB))
+                .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jTextLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabelUsuario)
-                    .addContainerGap(39, Short.MAX_VALUE)))
+                    .addContainerGap(76, Short.MAX_VALUE)))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelLogin, jLabelRol, jLabelUsuario, jTextLogin, jTextRol, jTextUsuario});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelDB, jLabelLogin, jLabelPass, jTextDB, jTextLogin, jTextPass});
 
         jTextLogin.setVisible(false);
-        jTextUsuario.setVisible(false);
+        jTextDB.setVisible(false);
         jLabelLogin.setVisible(false);
-        jLabelUsuario.setVisible(false);
-        jLabelRol.setVisible(false);
-        jTextRol.setVisible(false);
+        jLabelPass.setVisible(false);
+        jLabelDB.setVisible(false);
+        jTextPass.setVisible(false);
 
         jButtonGuardar.setText("GUARDAR");
         jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -202,10 +197,10 @@ public class Usuarios extends javax.swing.JDialog {
             }
         });
 
-        jButtonAtras.setText("Atrás");
-        jButtonAtras.addActionListener(new java.awt.event.ActionListener() {
+        jButtonVer1.setText("Atrás");
+        jButtonVer1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAtrasActionPerformed(evt);
+                jButtonVer1ActionPerformed(evt);
             }
         });
 
@@ -213,33 +208,34 @@ public class Usuarios extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(131, 131, 131)
+                        .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(125, 125, 125)
+                        .addComponent(jButtonVer1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(117, 117, 117)
-                                .addComponent(jButtonAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jButtonBorrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButtonCrear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(50, 50, 50))))
+                                    .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jSeparator1)))))
+                .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,7 +258,7 @@ public class Usuarios extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                        .addComponent(jButtonAtras))
+                        .addComponent(jButtonVer1))
                     .addComponent(jButtonGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,11 +275,11 @@ public class Usuarios extends javax.swing.JDialog {
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         jTextLogin.setVisible(true);
-        jTextUsuario.setVisible(true);
-        jTextRol.setVisible(true);
-        jLabelUsuario.setVisible(true);
+        jTextPass.setVisible(true);
+        jTextDB.setVisible(true);
+        jLabelPass.setVisible(true);
         jLabelLogin.setVisible(true);
-        jLabelRol.setVisible(true);
+        jLabelDB.setVisible(true);
 
         jButtonBorrar.setEnabled(false);
         jButtonVer.setEnabled(false);
@@ -294,25 +290,28 @@ public class Usuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        if (accion == "Borrar usuario") {
+        if(accion == "Borrar login"){
             System.out.println("Borrado");
-            BorrarUsuario();
+            BorrarLogin();
         }
-        if (accion == "Crear usuario") {
+        if (accion == "Crear login"){
             System.out.println("Creado");
-            CrearUsuario();
-            Roles();
+            CrearLogin();
         }
+        if (accion == "Ver login"){
+            System.out.println("Visto");
+        }
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
         // TODO add your handling code here:
         jTextLogin.setVisible(false);
-        jTextUsuario.setVisible(true);
-        jTextRol.setVisible(false);
-        jLabelUsuario.setVisible(true);
+        jTextPass.setVisible(true);
+        jTextDB.setVisible(false);
+        jLabelPass.setVisible(true);
         jLabelLogin.setVisible(false);
-        jLabelRol.setVisible(false);
+        jLabelDB.setVisible(false);
 
         jButtonBorrar.setEnabled(false);
         jButtonVer.setEnabled(false);
@@ -326,11 +325,11 @@ public class Usuarios extends javax.swing.JDialog {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         // TODO add your handling code here:
         jTextLogin.setVisible(false);
-        jTextUsuario.setVisible(false);
-        jTextRol.setVisible(false);
-        jLabelUsuario.setVisible(false);
+        jTextPass.setVisible(false);
+        jTextDB.setVisible(false);
+        jLabelPass.setVisible(false);
         jLabelLogin.setVisible(false);
-        jLabelRol.setVisible(false);
+        jLabelDB.setVisible(false);
 
         jButtonBorrar.setEnabled(true);
         jButtonVer.setEnabled(true);
@@ -340,37 +339,36 @@ public class Usuarios extends javax.swing.JDialog {
         jButtonCancelar.setVisible(false);
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void jButtonVer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVer1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButtonVer1ActionPerformed
+
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
-        verUsuarios();
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVerActionPerformed
 
-    private void jButtonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtrasActionPerformed
-        this.dispose();
-
-    }//GEN-LAST:event_jButtonAtrasActionPerformed
-
-    private void CrearUsuario() {
+    private void CrearLogin() {
         try {
             // TODO add your handling code here:
             System.out.println(con.isClosed());
-            PreparedStatement add_user = con.prepareStatement("exec sp_adduser ?, ?, ?");
+            PreparedStatement add_login = con.prepareStatement("exec sp_addlogin ?, ?, ?");
 
-            add_user.setString(1, jTextLogin.getText());
-            add_user.setString(2, jTextUsuario.getText());
-            add_user.setString(3, jTextRol.getSelectedItem().toString());
+            add_login.setString(1, jTextLogin.getText());
+            add_login.setString(2, jTextPass.getText());
+            add_login.setString(3, jTextDB.getText());
 
-            int añadir = add_user.executeUpdate();
+            int añadir = add_login.executeUpdate();
 
             if (añadir < 0) {
 
-                JOptionPane.showMessageDialog(null, "Se ha registrado el usuario correctamente");
+                JOptionPane.showMessageDialog(null, "Se ha creado el login correctamente");
 
                 jTextLogin.setVisible(false);
-                jTextUsuario.setVisible(false);
-                jTextRol.setVisible(false);
-                jLabelUsuario.setVisible(false);
+                jTextPass.setVisible(false);
+                jTextDB.setVisible(false);
+                jLabelPass.setVisible(false);
                 jLabelLogin.setVisible(false);
-                jLabelRol.setVisible(false);
+                jLabelDB.setVisible(false);
 
                 jButtonBorrar.setEnabled(true);
                 jButtonVer.setEnabled(true);
@@ -381,29 +379,29 @@ public class Usuarios extends javax.swing.JDialog {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void BorrarUsuario() {
+    private void BorrarLogin() {
         try {
 
-            PreparedStatement drop_user = con.prepareStatement("exec sp_dropuser ?");
+            PreparedStatement drop_login = con.prepareStatement("exec sp_droplogin ?");
 
-            drop_user.setString(1, jTextUsuario.getText());
+            drop_login.setString(1, jTextLogin.getText());
 
-            boolean borrar = drop_user.execute();
+            boolean borrar = drop_login.execute();
 
             if (borrar) {
 
                 JOptionPane.showMessageDialog(null, "Se ha borrado el usuario correctamente");
 
                 jTextLogin.setVisible(false);
-                jTextUsuario.setVisible(false);
-                jTextRol.setVisible(false);
-                jLabelUsuario.setVisible(false);
+                jTextPass.setVisible(false);
+                jTextDB.setVisible(false);
+                jLabelPass.setVisible(false);
                 jLabelLogin.setVisible(false);
-                jLabelRol.setVisible(false);
+                jLabelDB.setVisible(false);
 
                 jButtonBorrar.setEnabled(true);
                 jButtonVer.setEnabled(true);
@@ -414,91 +412,30 @@ public class Usuarios extends javax.swing.JDialog {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Login_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void Roles() {
-        try {
-            jTextRol.removeAllItems();
-            // TODO add your handling code here:
-            System.out.println(con.isClosed());
-            PreparedStatement view_role = con.prepareStatement("SELECT name FROM sys.database_principals WHERE type_desc ='DATABASE_ROLE'");
-
-            ResultSet rs = view_role.executeQuery();
-            String valor;
-
-            while (rs.next()) {
-                valor = rs.getString(1);
-                System.out.println("valor: " + valor);
-                jTextRol.addItem(valor);
-
-            }
-            rs.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void verUsuarios() {
-        try {
-            String sql = "SELECT database_role_members.member_principal_id AS MemberPrincipalID,members.name AS MemberPrincipalName, roles.principal_id AS RolePrincipalID, roles.name AS RolePrincipalName FROM sys.database_role_members AS database_role_members JOIN sys.database_principals AS roles ON database_role_members.role_principal_id = roles.principal_id JOIN sys.database_principals AS members ON database_role_members.member_principal_id = members.principal_id;";
-
-            System.out.println(con.isClosed());
-            PreparedStatement view_user = con.prepareStatement(sql);
-            DefaultTableModel modelo = (DefaultTableModel) jTableUsuarios.getModel();
-
-            //view_user.setString(1, jTextUsuario.getText());
-            ResultSet rs = view_user.executeQuery();
-
-            while (rs.next()) {
-                Object[] ob = new Object[4];
-                ob[0] = rs.getString(1);
-                ob[1] = rs.getString(2);
-                ob[2] = rs.getString(3);
-                ob[3] = rs.getString(4);
-                modelo.addRow(ob);
-            }
-            rs.close();
-            jTextLogin.setVisible(false);
-            jTextUsuario.setVisible(false);
-            jTextRol.setVisible(false);
-            jLabelUsuario.setVisible(false);
-            jLabelLogin.setVisible(false);
-            jLabelRol.setVisible(false);
-
-            jButtonBorrar.setEnabled(true);
-            jButtonVer.setEnabled(true);
-            jButtonCrear.setEnabled(true);
-
-            jButtonGuardar.setVisible(false);
-            jButtonCancelar.setVisible(false);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAtras;
     private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonVer;
+    private javax.swing.JButton jButtonVer1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelDB;
     private javax.swing.JLabel jLabelLogin;
-    private javax.swing.JLabel jLabelRol;
-    private javax.swing.JLabel jLabelUsuario;
+    private javax.swing.JLabel jLabelPass;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTableUsuarios;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextDB;
     private javax.swing.JTextField jTextLogin;
-    private javax.swing.JComboBox<String> jTextRol;
-    private javax.swing.JTextField jTextUsuario;
+    private javax.swing.JPasswordField jTextPass;
     // End of variables declaration//GEN-END:variables
     private Connection con;
     private String accion;
