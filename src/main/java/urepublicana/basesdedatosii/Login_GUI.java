@@ -9,10 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -62,7 +64,7 @@ public class Login_GUI extends javax.swing.JDialog {
         jButtonBorrar = new javax.swing.JButton();
         jButtonVer = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableLogin = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
@@ -104,15 +106,15 @@ public class Login_GUI extends javax.swing.JDialog {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableLogin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Login", "Usuario", "Rol"
+                "Login", "Tipo Login", "Fecha de Creación", "Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableLogin);
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -163,7 +165,7 @@ public class Login_GUI extends javax.swing.JDialog {
                     .addComponent(jTextPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelPass))
                 .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextDB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelDB))
                 .addContainerGap())
@@ -415,6 +417,54 @@ public class Login_GUI extends javax.swing.JDialog {
             Logger.getLogger(Login_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void verUsuarios() {
+        try {
+            String sql = "select sp.name as login,\n"
+                    + "       sp.type_desc as login_type,\n"
+                    + "       sp.create_date,\n"
+                    + "       case when sp.is_disabled = 1 then 'Disabled'\n"
+                    + "            else 'Enabled' end as status\n"
+                    + "from sys.server_principals sp\n"
+                    + "left join sys.sql_logins sl\n"
+                    + "          on sp.principal_id = sl.principal_id\n"
+                    + "where sp.type not in ('G', 'R')\n"
+                    + "order by sp.name;";
+
+            System.out.println(con.isClosed());
+            PreparedStatement view_user = con.prepareStatement(sql);
+            DefaultTableModel modelo = (DefaultTableModel) jTableLogin.getModel();
+
+            //view_user.setString(1, jTextUsuario.getText());
+            ResultSet rs = view_user.executeQuery();
+
+            while (rs.next()) {
+                Object[] ob = new Object[4];
+                ob[0] = rs.getString(1);
+                ob[1] = rs.getString(2);
+                ob[2] = rs.getString(3);
+                ob[3] = rs.getString(4);
+                modelo.addRow(ob);
+            }
+            rs.close();
+            jTextLogin.setVisible(false);
+            jTextPass.setVisible(false);
+            jTextDB.setVisible(false);
+            jLabelPass.setVisible(false);
+            jLabelLogin.setVisible(false);
+            jLabelDB.setVisible(false);
+
+            jButtonBorrar.setEnabled(true);
+            jButtonVer.setEnabled(true);
+            jButtonCrear.setEnabled(true);
+
+            jButtonGuardar.setVisible(false);
+            jButtonCancelar.setVisible(false);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -432,7 +482,7 @@ public class Login_GUI extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableLogin;
     private javax.swing.JTextField jTextDB;
     private javax.swing.JTextField jTextLogin;
     private javax.swing.JPasswordField jTextPass;

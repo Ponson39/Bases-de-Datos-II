@@ -114,7 +114,7 @@ public class Usuarios extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID Usuario", "Usuario", "ID Rol", "Rol"
+                "Usuario", "Fecha de Creación", "Tipo", "Autenticación"
             }
         ));
         jScrollPane1.setViewportView(jTableUsuarios);
@@ -443,7 +443,15 @@ public class Usuarios extends javax.swing.JDialog {
 
     private void verUsuarios() {
         try {
-            String sql = "SELECT database_role_members.member_principal_id AS MemberPrincipalID,members.name AS MemberPrincipalName, roles.principal_id AS RolePrincipalID, roles.name AS RolePrincipalName FROM sys.database_role_members AS database_role_members JOIN sys.database_principals AS roles ON database_role_members.role_principal_id = roles.principal_id JOIN sys.database_principals AS members ON database_role_members.member_principal_id = members.principal_id;";
+            String sql = "select name as username,\n"
+                    + "       create_date,\n"
+                    + "       type_desc as type,\n"
+                    + "       authentication_type_desc as authentication_type\n"
+                    + "from sys.database_principals\n"
+                    + "where type not in ('A', 'G', 'R', 'X')\n"
+                    + "      and sid is not null\n"
+                    + "      and name != 'guest'\n"
+                    + "order by username;";
 
             System.out.println(con.isClosed());
             PreparedStatement view_user = con.prepareStatement(sql);
@@ -461,6 +469,7 @@ public class Usuarios extends javax.swing.JDialog {
                 modelo.addRow(ob);
             }
             rs.close();
+            
             jTextLogin.setVisible(false);
             jTextUsuario.setVisible(false);
             jTextRol.setVisible(false);
