@@ -67,7 +67,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("VER BASES DE DATOS");
+        jButton2.setText("BASES DE DATOS");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -95,7 +95,7 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
-                        .addGap(0, 6, Short.MAX_VALUE))
+                        .addGap(0, 38, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -171,7 +171,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCerrarSesionActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Ver_DB db = new Ver_DB(this, true, log.Conection());
+        DB db = new DB(this, true, log.Conection());
         
         db.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
