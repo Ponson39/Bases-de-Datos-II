@@ -292,6 +292,9 @@ public class Login_GUI extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+       
+        System.out.println("accion: " + accion);
+        
         if(accion == "Borrar login"){
             System.out.println("Borrado");
             BorrarLogin();
@@ -302,6 +305,7 @@ public class Login_GUI extends javax.swing.JDialog {
         }
         if (accion == "Ver login"){
             System.out.println("Visto");
+            
         }
 
     }//GEN-LAST:event_jButtonGuardarActionPerformed
@@ -347,6 +351,7 @@ public class Login_GUI extends javax.swing.JDialog {
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
         // TODO add your handling code here:
+        verUsuarios();
     }//GEN-LAST:event_jButtonVerActionPerformed
 
     private void CrearLogin() {
